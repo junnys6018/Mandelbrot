@@ -5,7 +5,7 @@ class MandelbrotLayer : public Layer
 {
 public:
 	MandelbrotLayer()
-		:Layer("Mandelbrot"), m_Offset(0.0f, 0.0f), m_Scale(0.001f), m_Exp(-3), m_FirstMouse(true)
+		:Layer("Mandelbrot"), m_Offset(0.0f, 0.0f), m_Scale(0.001f), m_Exp(-3.0f), m_Degree(2.0f), m_FirstMouse(true)
 	{
 
 	}
@@ -16,6 +16,7 @@ public:
 		m_Shader->Bind();
 		m_Shader->SetFloat("u_Scale", m_Scale);
 		m_Shader->SetVec2("u_Offset", m_Offset);
+		m_Shader->SetFloat("u_Degree", m_Degree);
 
 		int width, height;
 		glfwGetFramebufferSize(Application::Get().GetWindow()->GetNaitiveWindow(), &width, &height);
@@ -43,10 +44,17 @@ public:
 	virtual void OnImGuiRender() override
 	{
 		JOLT_PROFILE_FUNCTION();
-		if (ImGui::SliderFloat("scale", &m_Exp, -5, -3))
+		ImGui::Text("Scale: %.3f", m_Exp);
+
+		if (ImGui::SliderFloat("Degree", &m_Degree, 0.001f, 10.0f))
 		{
-			m_Scale = glm::pow(10, m_Exp);
-			m_Shader->SetFloat("u_Scale", m_Scale);
+			m_Shader->SetFloat("u_Degree", m_Degree);
+		}
+
+		if (ImGui::Button("Reset Degree"))
+		{
+			m_Degree = 2.0f;
+			m_Shader->SetFloat("u_Degree", m_Degree);
 		}
 	}
 
@@ -62,7 +70,7 @@ private:
 	std::unique_ptr<Shader> m_Shader;
 	Mesh m_FlatRectangle;
 	glm::vec2 m_Offset;
-	float m_Scale, m_Exp;
+	float m_Scale, m_Exp, m_Degree;
 
 	bool m_FirstMouse;
 	glm::vec2 last_pos;

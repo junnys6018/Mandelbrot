@@ -14,6 +14,7 @@ out vec4 fragment;
 uniform float u_Scale;
 uniform vec2 u_Offset;
 uniform vec2 u_WindowSize;
+uniform float u_Degree;
 
 const int iterations = 100;
 
@@ -24,6 +25,15 @@ vec2 complex_mul(vec2 z1, vec2 z2)
     return vec2(real, imaginary);
 }
 
+vec2 complex_exp(vec2 z, float exp)
+{
+    float mag = sqrt(dot(z, z));
+    float theta = atan(z.y, z.x);
+    mag = pow(mag, exp);
+    theta *= exp;
+    return vec2(mag * cos(theta), mag * sin(theta));
+}
+
 void main()
 {
     vec2 c = u_Scale * (gl_FragCoord.xy - 0.5 * u_WindowSize) + u_Offset;
@@ -32,7 +42,7 @@ void main()
     vec2 p = vec2(0.0, 0.0);
     for (int i = 0; i < iterations; i++)
     {
-        p = complex_mul(p, p) + c;
+        p = complex_exp(p, u_Degree) + c;
 
         if (dot(p, p) > 4.0)
         {
