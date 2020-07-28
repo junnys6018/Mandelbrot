@@ -51,7 +51,7 @@ project "Mandelbrot"
 	}
 
 	filter "configurations:Debug"
-		defines { "DEBUG" }
+		defines { "DEBUG", "JOLT_PROFILE" }
 		symbols "On"
 
 	filter "configurations:Release"
