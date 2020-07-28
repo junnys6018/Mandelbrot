@@ -1,0 +1,12 @@
+.vs
+.vscode
+bin
+bin-int
+*.sln
+*.vcxproj*
+*.obj
+*.exe
+*Makefile
+*.out
+*imgui.ini
+*jltmsh
