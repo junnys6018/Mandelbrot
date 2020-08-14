@@ -56,6 +56,11 @@ public:
 			m_Degree = 2.0f;
 			m_Shader->SetFloat("u_Degree", m_Degree);
 		}
+
+		if (ImGui::Button("Screenshot"))
+		{
+			Screenshot::Capture();
+		}
 	}
 
 	virtual void OnEvent(Event* e) override
