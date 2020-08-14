@@ -103,7 +103,7 @@ private:
 
 	bool OnMouseScrolledEvent(MouseScrolledEvent& e)
 	{
-		m_Exp += e.GetYOffset() * 0.05f;
+		m_Exp -= e.GetYOffset() * 0.05f;
 		m_Scale = glm::pow(10, m_Exp);
 		m_Shader->SetFloat("u_Scale", m_Scale);
 
