@@ -57,3 +57,11 @@ project "Mandelbrot"
 	filter "configurations:Release"
 		defines { "RELEASE" }
 		optimize "On"
+
+	filter "system:linux"
+		links { "dl", "pthread" }
+		postbuildcommands 
+		{
+			"@echo cp %{wks.location}/bin/" .. outputdir .. "/%{prj.name}/%{prj.name} %{prj.location}/%{prj.name}.out",
+			"@cp %{wks.location}/bin/" .. outputdir .. "/%{prj.name}/%{prj.name} %{prj.location}/%{prj.name}.out"
+		}
