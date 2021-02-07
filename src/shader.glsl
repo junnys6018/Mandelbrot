@@ -4,7 +4,7 @@ layout(location = 0) in vec2 a_Position;
 
 void main()
 {
-	gl_Position = vec4(a_Position, 0.0, 1.0);
+    gl_Position = vec4(a_Position, 0.0, 1.0);
 }
 
 #Shader Fragment
@@ -46,12 +46,12 @@ void main()
 
         if (dot(p, p) > 4.0)
         {
-			//This is a coloring algorithm I found to be appealing. Written in HSV, many functions will work.
-            float colorRegulator = float(i-1)-log(((log(dot(p,p)))/log(2.0)))/log(2.0);
-			vec3 color = vec3(0.95 + .012*colorRegulator , 1.0, .2+.4*(1.0+sin(.3*colorRegulator)));
+            //This is a coloring algorithm I found to be appealing. Written in HSV, many functions will work.
+            float colorRegulator = float(i - 1) - log(((log(dot(p, p))) / log(2.0))) / log(2.0);
+            vec3 color = vec3(0.95 + .012 * colorRegulator, 1.0, .2 + .4 * (1.0 + sin(.3 * colorRegulator)));
             vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-	        vec3 m = abs(fract(color.xxx + K.xyz) * 6.0 - K.www);
-	        fragment.rgb = color.z * mix(K.xxx, clamp(m - K.xxx, 0.0, 1.0), color.y);
+            vec3 m = abs(fract(color.xxx + K.xyz) * 6.0 - K.www);
+            fragment.rgb = color.z * mix(K.xxx, clamp(m - K.xxx, 0.0, 1.0), color.y);
             break;
         }
     }
